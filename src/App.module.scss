@@ -1,0 +1,31 @@
+.App {
+  max-width: 1200px;
+  margin: 0 auto;
+  border: 1px solid white;
+  height: 100vh;
+}
+
+
+.App-header {
+  display: flex;
+ justify-content: center;
+}
+.plus {
+  position: fixed;
+  right: 10px;
+  bottom: 10px;
+  height: 50px;
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background-color: lightblue;
+  > i {
+    color: white;
+  }
+  &:hover {
+    background-color: rgba(darkblue, .2)
+  }
+  cursor: pointer;
+}
