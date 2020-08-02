@@ -57,14 +57,14 @@ function App() {
             <header className={style['App-header']}>
               <h1>DailyDrinks!</h1>
             </header>
-            <main>
+            <main data-testid="drink-list">
               {
                 drinks.map((drink) => <List key={drink.id} drink={drink} editFn={editFn} deleteFn={deleteFn} />)
               }
             </main>
           </>
         )}
-        <div className={style.plus} onClick={addFn}>
+        <div className={style.plus} onClick={addFn}  data-testid="plus">
           <i className="fa fa-plus" aria-hidden="true"></i>
         </div>
       </div>
