@@ -1,7 +1,6 @@
 .App {
   max-width: 1200px;
   margin: 0 auto;
-  border: 1px solid white;
   height: 100vh;
 }
 
@@ -25,7 +24,7 @@
     color: white;
   }
   &:hover {
-    background-color: rgba(darkblue, .2)
+    background-color: #3ca2c3;
   }
   cursor: pointer;
 }
