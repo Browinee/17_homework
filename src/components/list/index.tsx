@@ -1,5 +1,5 @@
 import React from 'react';
-import style from './index.module.scss';
+import style from './style.module.scss';
 import { IDrink } from '../../types';
 
 type IList = {
