@@ -14,10 +14,10 @@ function List({ drink, editFn, deleteFn }: IList) {
       <div className={style.header}>
         <h2>{name}</h2>
         <div className={style['button-group']}>
-          <button onClick={() => editFn(id)}>
+          <button data-testid="edit-order" onClick={() => editFn(id)}>
             <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
           </button>
-          <button onClick={() => deleteFn(id)}>
+          <button data-testid="delete-order" onClick={() => deleteFn(id)}>
             <i className="fa fa-trash" aria-hidden="true"></i>
           </button>
         </div>

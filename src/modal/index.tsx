@@ -7,8 +7,7 @@ import { IDrink } from '../types';
 
 
 const KEY_ESCAPE = 27;
-type IModal = {
-  isNew?: boolean;
+export type IModal = {
   selectedInfo: IDrink | null;
   submitFn: (value: IDrink) => void;
   closeFn: () => void;
@@ -16,6 +15,7 @@ type IModal = {
 
 function Modal(props: IModal) {
   const { submitFn, selectedInfo, closeFn } = props;
+
   const handleOutsideArea = useCallback((e: MouseEvent) => {
     if((e.target as HTMLButtonElement ).tagName=== 'DIV') {
       closeFn();
@@ -35,7 +35,7 @@ function Modal(props: IModal) {
     };
   }, []);
   return (
-    <div className={style['modal-wrapper']}>
+    <div data-testid="modal" className={style['modal-wrapper']}>
       <Formik
         initialValues={selectedInfo ? selectedInfo : { id: uuidv4(), name: '', drinkName: '', price: 0, note: '' }}
         validationSchema={validationSchema}
@@ -56,6 +56,7 @@ function Modal(props: IModal) {
                 X
               </button>
               <Field
+                data-testid="name"
                 name="name"
                 type="text"
                 className={`${style['input-field']} ${errors.name && touched.name ? style['is-invalid'] : ''}`}
@@ -63,6 +64,7 @@ function Modal(props: IModal) {
               />
               <ErrorMessage name="name" render={(msg) => <div className={style['invalid-feedback']}>{msg}</div>} />
               <Field
+                data-testid="drinkName"
                 name="drinkName"
                 type="text"
                 className={`${style['input-field']} ${errors.drinkName && touched.drinkName ? style['is-invalid'] : ''}`}
@@ -70,13 +72,14 @@ function Modal(props: IModal) {
               />
               <ErrorMessage name="drinkName" render={(msg) => <div className={style['invalid-feedback']}>{msg}</div>} />
               <Field
+                data-testid="price"
                 name="price"
                 type="number"
                 className={`${style['input-field']} ${errors.price && touched.price ? style['is-invalid'] : ''}`}
                 placeholder="Price*"
               />
               <ErrorMessage name="price" render={(msg) => <div className={style['invalid-feedback']}>{msg}</div>} />
-              <Field name="note" component="textarea" cols="50" rows="5" className={style['input-field']} placeholder="Note" />
+              <Field  data-testid="note" name="note" component="textarea" cols="50" rows="5" className={style['input-field']} placeholder="Note" />
               <button className={style.submitButton} type="submit" disabled={!isValid || !dirty}>
                 Submit
               </button>
