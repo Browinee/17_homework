@@ -1,15 +1,12 @@
-import React from 'react';
-import * as Yup from 'yup';
-import style from './index.module.scss';
-import { Formik, Field, Form, ErrorMessage } from 'formik';
+import React, { useEffect, useCallback } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
+import { validationSchema } from './util';
+import style from './style.module.scss';
 import { IDrink } from '../types';
 
-const validationSchema = Yup.object({
-  name: Yup.string().required('Please enter your name.'),
-  drinkName: Yup.string().required('Please enter your drink.'),
-  price: Yup.number().required('Please enter the price.')
-});
+
+const KEY_ESCAPE = 27;
 type IModal = {
   isNew?: boolean;
   selectedInfo: IDrink | null;
@@ -19,6 +16,24 @@ type IModal = {
 
 function Modal(props: IModal) {
   const { submitFn, selectedInfo, closeFn } = props;
+  const handleOutsideArea = useCallback((e: MouseEvent) => {
+    if((e.target as HTMLButtonElement ).tagName=== 'DIV') {
+      closeFn();
+    }
+  }, []);
+  const handleEsc = useCallback((e: KeyboardEvent) => {
+    if(e.keyCode === KEY_ESCAPE) {
+      closeFn();
+    }
+  }, []);
+  useEffect(() => {
+    window.addEventListener('keydown', handleEsc);
+    window.addEventListener('click', handleOutsideArea);
+    return () => {
+      window.removeEventListener('click', handleOutsideArea);
+      window.removeEventListener('keydown', handleEsc);
+    };
+  }, []);
   return (
     <div className={style['modal-wrapper']}>
       <Formik
@@ -37,7 +52,9 @@ function Modal(props: IModal) {
                   {!selectedInfo ? 'Order drinks' : 'Edit drinks'} {dirty}
                 </h1>
               </header>
-              <button className={style.closeButton} onClick={closeFn}>X</button>
+              <button className={style.closeButton} onClick={closeFn}>
+                X
+              </button>
               <Field
                 name="name"
                 type="text"
